@@ -1,6 +1,7 @@
 // Setup initial game stats
 var score = 0;
 var lives = 2;
+var pellets = 4
 
 
 // Define your ghosts here
@@ -37,7 +38,7 @@ var clyde = {
 };
 
 // replace this comment with your four ghosts setup as objects
-
+var ghosts = [inky, blinky, pinky, clyde]
 
 // Draw the screen functionality
 function drawScreen() {
@@ -54,12 +55,19 @@ function clearScreen() {
 }
 
 function displayStats() {
-  console.log('Score: ' + score + '     Lives: ' + lives);
+  console.log('Score: ' + score + '     Lives: ' + lives );
+  console.log('Power-Pellets: ' + pellets );
+
 }
 
 function displayMenu() {
   console.log('\n\nSelect Option:\n');  // each \n creates a new line
   console.log('(d) Eat Dot');
+  console.log('(p) Eat Power-Pellet');
+  console.log('(1) Eat Inky');
+  console.log('(2) Eat Blinky');
+  console.log('(3) Eat Pinky');
+  console.log('(4) Eat Clyde');
   console.log('(q) Quit');
 }
 
@@ -75,6 +83,28 @@ function eatDot() {
   score += 10;
 }
 
+function eatGhost(ghost) {
+  if(ghost.edible === false){
+    lives -= 1
+    console.log(ghost.colour + ghost.name + ' kills Pac-Man');
+  } else {
+    console.log(ghost.character + ghost.name + ' was eaten by Pac-Man')
+    score += 200
+    ghost.edible = false
+  }
+}
+
+function eatPowerPellet(){
+  if(pellets > 0){
+    score += 50;
+    for (var i = 0; i < 3; i++){
+      ghosts[i].edible = true;
+    }
+    pellets -= 1;
+  } else {
+    console.log(' No Power-Pellets left! ')
+  }
+}
 
 // Process Player's Input
 function processInput(key) {
@@ -83,14 +113,30 @@ function processInput(key) {
     case 'q':
       process.exit();
       break;
+    case 'p':
+      eatPowerPellet();
+      break;
     case 'd':
       eatDot();
+      break;
+    case '1':
+      eatGhost(inky);
+      break;
+    case '2':
+      eatGhost(blinky);
+      break;
+    case '3':
+      eatGhost(pinky);
+      break;
+    case '4':
+      eatGhost(clyde);
       break;
     default:
       console.log('\nInvalid Command!');
   }
 }
 
+console.log(processInput)
 
 //
 // YOU PROBABLY DON'T WANT TO CHANGE CODE BELOW THIS LINE
