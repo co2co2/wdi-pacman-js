@@ -95,10 +95,11 @@ function edibility(ghost){
 
 function eatGhost(ghost) {
   if(ghost.edible === false){
+    console.log( ghost.colour + " "+ ghost.name + ' kills Pac-Man');
     lives -= 1
-    console.log(ghost.colour + ghost.name + ' kills Pac-Man');
+    liveCheck();
   } else {
-    console.log(ghost.character + ghost.name + ' was eaten by Pac-Man')
+    console.log(ghost.character + " "+ ghost.name + ' was eaten by Pac-Man')
     score += 200
     ghost.edible = false
   }
@@ -113,6 +114,12 @@ function eatPowerPellet(){
     pellets -= 1;
   } else {
     console.log(' No Power-Pellets left! ')
+  }
+}
+
+function liveCheck(){
+  if(lives < 0) {
+    process.exit();
   }
 }
 
