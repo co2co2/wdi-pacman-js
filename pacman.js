@@ -63,11 +63,13 @@ function displayStats() {
 function displayMenu() {
   console.log('\n\nSelect Option:\n');  // each \n creates a new line
   console.log('(d) Eat Dot');
-  console.log('(p) Eat Power-Pellet');
-  console.log('(1) Eat Inky');
-  console.log('(2) Eat Blinky');
-  console.log('(3) Eat Pinky');
-  console.log('(4) Eat Clyde');
+  if (pellets > 0) {
+    console.log('(p) Eat Power-Pellet');
+  };
+  console.log('(1) Eat Inky ' + (edibility(inky)));
+  console.log('(2) Eat Blinky '+ (edibility(blinky)));
+  console.log('(3) Eat Pinky '+ (edibility(pinky)));
+  console.log('(4) Eat Clyde ' + (edibility(clyde)));
   console.log('(q) Quit');
 }
 
@@ -82,6 +84,14 @@ function eatDot() {
   console.log('\nChomp!');
   score += 10;
 }
+function edibility(ghost){
+  if(ghost.edible === false){
+  return "inedible ";
+} else {
+  return "edible ";
+  }
+}
+
 
 function eatGhost(ghost) {
   if(ghost.edible === false){
@@ -97,7 +107,7 @@ function eatGhost(ghost) {
 function eatPowerPellet(){
   if(pellets > 0){
     score += 50;
-    for (var i = 0; i < 3; i++){
+    for (var i = 0; i < 4; i++){
       ghosts[i].edible = true;
     }
     pellets -= 1;
@@ -109,6 +119,7 @@ function eatPowerPellet(){
 // Process Player's Input
 function processInput(key) {
   switch(key) {
+
     case '\u0003': // This makes it so CTRL-C will quit the program
     case 'q':
       process.exit();
